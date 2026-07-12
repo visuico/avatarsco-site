@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avatarsco</title>
+  <meta name="description" content="Avatarsco — a studio of AI-native personas for brands and campaigns.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@900&family=Syne:wght@400;600;700;800&family=Space+Mono:wght@400;700&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=120">
+</head>
+<body>
+
+  <!-- Entry gate: first-visit interstitial (handled by entry-gate.js) -->
+  <div class="entry-gate" id="entry-gate" hidden>
+    <div class="entry-gate-panel" role="dialog" aria-modal="true" aria-label="Welcome">
+      <button class="entry-gate-skip" id="entry-gate-skip" aria-label="Skip and enter the site">Skip &#x2192;</button>
+      <p class="entry-gate-eyebrow">Welcome to Avatarsco</p>
+      <h2 class="entry-gate-title">Before you step in</h2>
+      <p class="entry-gate-sub">What best describes you?</p>
+      <div class="entry-gate-options">
+        <button class="entry-gate-btn" data-segment="brand" data-go="">
+          <span class="eg-btn-label">I'm a Brand / Prospective Client</span>
+          <span class="eg-btn-sub">Looking to hire for AI Images, Videos or AI personas or looking to collaborate</span>
+        </button>
+        <button class="entry-gate-btn" data-segment="creator" data-go="">
+          <span class="eg-btn-label">I'm an AI Creator</span>
+          <span class="eg-btn-sub">Exploring, learning or looking to collaborate</span>
+        </button>
+        <button class="entry-gate-btn" data-segment="exploring" data-go="">
+          <span class="eg-btn-label">Just exploring</span>
+          <span class="eg-btn-sub">Learning and exploring; show me around</span>
+        </button>
+      </div>
+      <p class="entry-gate-fineprint">You won't see this box again on this device. It may reappear if you clear your browser data, or open the site from a different device or in private/incognito mode. <a href="privacy.html">Privacy Policy</a>.</p>
+    </div>
+  </div>
+
+  <!-- Cookie / analytics consent banner (handled by entry-gate.js) -->
+  <div class="cookie-consent" id="cookie-consent" hidden>
+    <p class="cookie-text">We use cookies and analytics to understand site traffic and improve your experience. You can decline and still use the site. See our <a href="privacy.html">Privacy Policy</a>.</p>
+    <div class="cookie-actions">
+      <button class="cookie-btn cookie-decline" id="cookie-decline">Decline</button>
+      <button class="cookie-btn cookie-accept" id="cookie-accept">Accept</button>
+    </div>
+  </div>
+
+  <!-- Nav: logo only -->
+  <nav class="nav" id="nav">
+    <div class="nav-menu-wrap">
+      <button type="button" class="nav-logo" id="nav-logo-toggle" aria-expanded="false" aria-controls="nav-blob-menu" aria-label="Open navigation menu">
+        <img src="assets/LOGO-asset_avatarsco-regular-1-transparent.png" alt="Avatarsco" class="nav-logo-img">
+      </button>
+      <div class="nav-blob" id="nav-blob-menu" aria-hidden="true">
+        <span class="nav-blob-trail t1" aria-hidden="true"></span>
+        <span class="nav-blob-trail t2" aria-hidden="true"></span>
+        <span class="nav-blob-trail t3" aria-hidden="true"></span>
+        <span class="nav-blob-trail t4" aria-hidden="true"></span>
+        <div class="nav-blob-goo" aria-hidden="true">
+          <span class="nav-blob-shape s1"></span>
+          <span class="nav-blob-shape s2"></span>
+          <span class="nav-blob-shape s3"></span>
+          <span class="nav-blob-shape s4"></span>
+        </div>
+        <canvas class="nav-blob-canvas" width="250" height="210" aria-hidden="true"></canvas>
+        <div class="nav-blob-links">
+          <svg class="nav-blob-lines" viewBox="0 0 250 210" preserveAspectRatio="none" aria-hidden="true">
+            <polyline points="76,85 138,112 92,148" />
+          </svg>
+          <a href="#work" class="nav-blob-node n-custom"><span class="node-dot"></span><span class="node-label">Custom</span></a>
+          <a href="#recommend" class="nav-blob-node n-skills"><span class="node-dot"></span><span class="node-label">Skills</span></a>
+          <a href="#signup" class="nav-blob-node n-join"><span class="node-dot"></span><span class="node-label">Join</span></a>
+        </div>
+      </div>
+      <svg class="nav-goo-defs" width="0" height="0" aria-hidden="true" focusable="false">
+        <defs>
+          <filter id="nav-goo">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="9" result="blur"/>
+            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -10" result="goo"/>
+            <feBlend in="SourceGraphic" in2="goo"/>
+          </filter>
+        </defs>
+      </svg>
+    </div>
+    <div class="nav-right">
+      <div class="nav-social">
+        <a href="https://www.instagram.com/avatarsco" target="_blank" rel="noopener" class="nav-social-icon" style="color:#E1306C" aria-label="Instagram">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://x.com/avatarsco?s=11" target="_blank" rel="noopener" class="nav-social-icon" style="color:#ffffff" aria-label="X / Twitter">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.263 5.632zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@avatarsco?_r=1&amp;_t=ZT-97d84IQcTh0" target="_blank" rel="noopener" class="nav-social-icon" style="color:#69C9D0" aria-label="TikTok">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.23 8.23 0 004.84 1.55V6.79a4.85 4.85 0 01-1.07-.1z"/></svg>
+        </a>
+        <a href="https://www.reddit.com/user/avatarsco/?utm_source=share&amp;utm_medium=mweb3x&amp;utm_name=mweb3xcss&amp;utm_term=1&amp;utm_content=share_button" target="_blank" rel="noopener" class="nav-social-icon nav-social-extra" style="color:#FF4500" aria-label="Reddit">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+        </a>
+        <a href="https://www.threads.com/@avatarsco?igshid=NTc4MTIwNjQ2YQ==" target="_blank" rel="noopener" class="nav-social-icon nav-social-extra" style="color:#ffffff" aria-label="Threads">
+          <svg width="16" height="16" viewBox="0 0 192 192" fill="currentColor"><path d="M141.537 88.9883C140.71 88.5919 139.87 88.2104 139.019 87.8451C137.537 60.5382 122.616 44.905 97.5619 44.745C97.4484 44.7443 97.3355 44.7443 97.222 44.7443C82.2364 44.7443 69.7731 51.1456 62.102 62.7153L75.881 72.2996C81.6116 63.6557 90.6052 61.3973 97.2286 61.3973C97.3051 61.3973 97.3819 61.3973 97.4576 61.3979C105.707 61.4551 111.995 63.9171 115.123 68.7556C117.362 72.1472 118.501 76.4371 118.538 81.5587C113.418 80.7494 107.838 80.4899 101.887 80.7391C77.9736 81.7316 63.2395 95.5824 64.1369 114.162C64.5937 123.566 69.0867 131.66 76.7295 137.063C83.2208 141.703 91.6355 143.974 100.377 143.566C112.006 143.013 121.053 138.505 127.282 129.271C131.988 122.337 134.922 113.526 136.078 102.553C141.443 105.818 145.405 110.512 147.614 116.451C151.461 126.96 151.617 144.039 138.875 156.765C127.756 167.87 114.351 172.701 94.0544 172.85C71.5718 172.685 54.0123 165.411 41.9468 151.165C30.5369 137.681 24.6456 118.036 24.4558 93C24.6456 67.9636 30.5369 48.3183 41.9468 34.8348C54.0123 20.5891 71.5718 13.3153 94.0544 13.15C116.704 13.3166 134.526 20.6199 146.835 35.0571C152.89 41.8556 157.489 50.0498 160.603 59.4649L176.207 55.0029C172.409 43.1853 166.793 33.0023 159.352 24.5998C144.052 7.42991 122.038 -0.572277 94.1288 -0.742432L93.9852 -0.742432C66.1416 -0.572277 44.2155 7.44699 29.0622 24.618C15.5144 40.0433 8.45459 62.0042 8.23816 93L8.23816 93.0031C8.45459 123.999 15.5144 145.957 29.0622 161.382C44.2155 178.553 66.1416 186.573 93.9852 186.743L94.1288 186.743C118.759 186.587 138.332 179.993 153.166 165.177C171.389 146.974 170.894 124.094 165.006 110.192C160.737 100.089 152.463 92.0018 141.537 88.9883ZM98.4405 126.278C88.5845 126.748 78.2936 122.232 77.8054 112.696C77.4356 105.379 83.2072 97.3736 101.671 96.5418C103.796 96.4491 105.876 96.404 107.912 96.404C113.926 96.404 119.555 96.9877 124.655 98.0982C122.731 121.453 110.039 125.724 98.4405 126.278Z"/></svg>
+        </a>
+        <a href="https://www.facebook.com/share/1KZZXWk51x/?mibextid=wwXIfr" target="_blank" rel="noopener" class="nav-social-icon" style="color:#1877F2" aria-label="Facebook">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a href="https://www.snapchat.com/add/avatarsco?share_id=EsjqAi3nSEmnYsf4_v-M3w&amp;locale=en_US" target="_blank" rel="noopener" class="nav-social-icon nav-social-extra" style="color:#FFFC00" aria-label="Snapchat">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12.206.793c.99 0 4.347.276 5.93 3.821.529 1.193.403 3.219.34 4.395 0 0-.342.06-.578.06-.236 0-.505-.06-.505-.06-.135.591-.408 1.17-.822 1.636.414.329.99.504 1.636.504.232 0 .464-.037.697-.096.13-.036.263-.052.384-.017.253.073.373.35.242.627-.49 1.02-1.604 1.563-2.988 1.833l-.096.023c-.186.052-.32.165-.403.32-.14.27-.208.533-.208.788 0 .04.005.077.008.116.018.2.025.384.025.57 0 .23-.02.456-.06.678-.185 1.04-.93 1.818-2.118 2.333-.693.3-1.55.46-2.53.46s-1.837-.16-2.53-.46c-1.188-.515-1.933-1.293-2.118-2.333-.04-.222-.06-.448-.06-.678 0-.186.007-.37.025-.57.003-.04.008-.076.008-.116 0-.255-.068-.518-.208-.788-.083-.155-.217-.268-.403-.32l-.096-.023C3.916 13.302 2.8 12.76 2.31 11.74c-.13-.277-.01-.554.242-.627.121-.035.254-.02.384.017.233.059.465.096.697.096.646 0 1.222-.175 1.636-.504-.414-.466-.687-1.045-.822-1.636 0 0-.27.06-.505.06-.237 0-.578-.06-.578-.06-.063-.776-.19-3.202.34-4.395C7.859 1.069 11.216.793 12.206.793z"/></svg>
+        </a>
+        <a href="mailto:hello@avatarsandco.com" class="nav-social-icon" style="color:#C8FF00" aria-label="Email">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+        </a>
+      </div>
+      <a href="https://www.instagram.com/avatarsco" target="_blank" rel="noopener" class="nav-follow-btn">Follow Us</a>
+    </div>
+  </nav>
+
+  <!-- Email redirect modal -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-card">
+      <button class="modal-close" id="modal-close" aria-label="Close">&#x2715;</button>
+      <h3 class="modal-title">We're handing you off to your email</h3>
+      <p class="modal-body">To help us assess fit, please share as much as you can. If you are unsure about anything, note it in the email or skip it. After you send your request, we will review it and reach out about next steps. Trouble sending? Email us at hello@avatarsandco.com.</p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost-sm" id="modal-cancel">Cancel</button>
+        <a class="btn btn-continue" id="modal-continue" target="_blank" rel="noopener">Continue</a>
+      </div>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- Hero -->
+    <section class="hero">
+      <h1 class="hero-headline entering" style="--order:0">
+        <span class="hl-line">
+          <span class="hl-thin">The</span>
+          <span class="hl-thin">faces of</span>
+        </span>
+        <span class="hl-line">
+          <span class="hl-thin hl-tilt">tomorrow's</span>
+        </span>
+        <span class="hl-line">
+          <span class="hl-thin hl-internet">internet</span>
+        </span>
+      </h1>
+      <h2 class="stats-title-block">AI is Not<br>Just a Trend</h2>
+      <!-- Hero showcase: large push-transition photo slideshow -->
+      <div class="hero-showcase" id="hero-showcase-feat">
+        <div class="showcase-nums" id="showcase-nums">
+          <button class="showcase-num active" data-idx="0" aria-label="Go to slide 1">01</button>
+          <button class="showcase-num" data-idx="1" aria-label="Go to slide 2">02</button>
+          <button class="showcase-num" data-idx="2" aria-label="Go to slide 3">03</button>
+          <button class="showcase-num" data-idx="3" aria-label="Go to slide 4">04</button>
+          <button class="showcase-num" data-idx="4" aria-label="Go to slide 5">05</button>
+          <button class="showcase-num" data-idx="5" aria-label="Go to slide 6">06</button>
+          <button class="showcase-num" data-idx="6" aria-label="Go to slide 7">07</button>
+          <button class="showcase-num" data-idx="7" aria-label="Go to slide 8">08</button>
+        </div>
+        <div class="showcase-text-wrap">
+          <div class="showcase-text-item active">
+            <p class="showcase-eyebrow">01 — Story</p>
+            <h2 class="showcase-title">A Persona With<br>a Point of View</h2>
+            <p class="showcase-body">More than a face. A character with history, voice, and perspective that makes people lean in and keep watching.</p>
+          </div>
+          <div class="showcase-text-item">
+            <p class="showcase-eyebrow">02 — Character</p>
+            <h2 class="showcase-title">Made to<br>Stand Out</h2>
+            <p class="showcase-body">Authentic presence. Every AI persona starts with a distinctive visual identity built to stand out in any feed.</p>
+          </div>
+          <div class="showcase-text-item">
+            <p class="showcase-eyebrow">03 — Content</p>
+            <h2 class="showcase-title">Looks Real.<br>Performs Better.</h2>
+            <p class="showcase-body">Real-world UGC. AI-generated content that looks, feels, and performs like the organic social posts audiences trust.</p>
+          </div>
+          <div class="showcase-text-item">
+            <p class="showcase-eyebrow">04 — Commerce</p>
+            <h2 class="showcase-title">Built for<br>Commerce</h2>
+            <p class="showcase-body">Product precision. Real product in hand from a Central Ohio juice bar called Native Cold Pressed. AI avatars built to showcase products and drive people towards action.</p>
+          </div>
+          <div class="showcase-text-item">
+            <p class="showcase-eyebrow">05 — Presence</p>
+            <h2 class="showcase-title">Always<br>in the Room</h2>
+            <p class="showcase-body">A persona that shows up wherever your audience is. Consistent, compelling, and built for the long term.</p>
+          </div>
+          <div class="showcase-text-item">
+            <p class="showcase-eyebrow">06 — Detail</p>
+            <h2 class="showcase-title">Detail That<br>Lingers</h2>
+            <p class="showcase-body">Uncompromising realism. The texture of imperfection that makes a moment linger, authentically.</p>
+          </div>
+          <div class="showcase-text-item">
+            <p class="showcase-eyebrow">07 — Platform-first</p>
+            <h2 class="showcase-title">Native to<br>the Feed</h2>
+            <p class="showcase-body">Short-form content crafted for the formats and platforms your audience already lives on.</p>
+          </div>
+          <div class="showcase-text-item">
+            <p class="showcase-eyebrow">08 — Style</p>
+            <h2 class="showcase-title">Unmistakably<br>On Brand</h2>
+            <p class="showcase-body">Cohesive visual language, repeated across every asset. The consistency that makes a brand recognizable in a single frame.</p>
+          </div>
+        </div>
+        <a class="showcase-photo-wrap" href="https://www.instagram.com/avatarsco" target="_blank" rel="noopener" aria-label="View Avatarsco on Instagram" oncontextmenu="return false">
+          <span class="showcase-badge">AI Image</span>
+          <div class="showcase-photo-item active">
+            <img src="assets/Web%20Photo%20Gallery/1.%20AVATAR_7_Scene-Range-Rover-2025-Tight-Low-Angle_9_Flow_4.3_2K_20260609-0249.jpeg" alt="AI avatar story" draggable="false">
+          </div>
+          <div class="showcase-photo-item">
+            <img src="assets/Web%20Photo%20Gallery/2.%20FEMALE_AVATAR_5_20260611-0121.jpeg" alt="AI avatar character" draggable="false">
+          </div>
+          <div class="showcase-photo-item">
+            <img src="assets/Web%20Photo%20Gallery/3.%20IMAGE_NB_202606110130.jpeg" alt="AI avatar content" draggable="false">
+          </div>
+          <div class="showcase-photo-item sc-dual">
+            <img src="assets/Web%20Photo%20Gallery/4.%20FEMALE_AVATAR_1_20260609020.jpeg" alt="AI avatar commerce" class="sc-sub sc-sub-active" draggable="false">
+            <img src="assets/Web%20Photo%20Gallery/4.1.jpeg" alt="AI avatar commerce, second frame" class="sc-sub" draggable="false">
+          </div>
+          <div class="showcase-photo-item">
+            <img src="assets/Web%20Photo%20Gallery/5.%20MALE_AVATAR_2__202606090234.jpeg" alt="AI avatar presence" draggable="false">
+          </div>
+          <div class="showcase-photo-item">
+            <img src="assets/Web%20Photo%20Gallery/6.%20FEMALE_AVATAR_1_20260609-2307.jpeg" alt="AI avatar detail" draggable="false">
+          </div>
+          <div class="showcase-photo-item">
+            <img src="assets/Web%20Photo%20Gallery/7.%20FEMALE_AVATAR_7_202606090158.jpeg" alt="AI avatar platform" draggable="false">
+          </div>
+          <div class="showcase-photo-item">
+            <img src="assets/Web%20Photo%20Gallery/8.%20FEMALE_AVATAR_1_202606110148.jpeg" alt="AI avatar style" draggable="false">
+          </div>
+        </a>
+      </div>
+
+      <h3 class="action-title entering" style="--order:2">Request a Custom<br>AI Video or Image<br>Project</h3>
+      <div class="hero-actions entering" style="--order:2">
+        <a href="#" class="btn btn-orange mailto-btn" data-mailto="mailto:hello@avatarsandco.com?subject=Request%20a%20Video&body=Hello%20Avatarsco%2C%0A%0AI%27m%20interested%20in%20requesting%20a%20video.%20Here%27s%20some%20context%3A%0A%0AYour%20name%3A%20%0ABrand%20or%20project%20name%3A%20%0ANumber%20of%20videos%3A%20%0APurpose%20%2F%20Use%20(what%20is%20this%20video%20for%3F)%3A%20%0AUse%20on%20which%20platform(s)%3F%20(e.g.%20TikTok%2C%20Instagram%2C%20YouTube%2C%20Facebook%20Ads)%3A%20%0ARunning%20as%20a%20paid%20ad%3F%20(Yes%20%2F%20No%20%2F%20Unsure)%3A%20%0AVideo%20duration%20(e.g.%2015s%2C%2030s%2C%201%20min%20or%20more)%3A%20%0AEstimated%20budget%3A%20%0A%0APhone%20number%3A%20%0APreferred%20mode%20for%20initial%20contact%20(email%2C%20phone%2C%20etc)%3A%20%0A%0AThank%20you%2C%0A%5BYour%20Name%5D" data-tip="Custom AI video content for campaigns, organic posts, paid ads, and more.">Request a Video</a>
+        <a href="#" class="btn btn-primary mailto-btn" data-mailto="mailto:hello@avatarsandco.com?subject=Request%20an%20Image&body=Hello%20Avatarsco%2C%0A%0AI%27m%20interested%20in%20requesting%20image.%20Here%27s%20some%20context%3A%0A%0AYour%20name%3A%20%0ABrand%20or%20project%20name%3A%20%0AIs%20this%20a%20product-based%20or%20person-based%20image%3F%20%0AHow%20many%20images%20do%20you%20need%3F%20%0AWhat%20will%20the%20images%20be%20used%20for%20(E-commerce%2C%20Website%2C%20Ads%2C%20Social%20Media%2C%20Print%2C%20etc.)%3F%20%0ADescribe%20the%20style%20of%20images%20that%20you%20want%20(you%20can%20include%20links%20or%20references)%3A%20%0AWill%20any%20images%20require%20text%3F%20%0AWhen%20do%20you%20need%20the%20images%3F%20%0AEstimated%20budget%3A%20%0A%0APhone%20number%3A%20%0APreferred%20mode%20for%20initial%20contact%20(email%2C%20phone%2C%20etc)%3A%20%0A%0AThank%20you%2C%0A%5BYour%20Name%5D" data-tip="Custom AI-generated imagery for your brand, product, or campaign.">Request an Image</a>
+        <a href="#" class="btn btn-ghost mailto-btn" data-mailto="mailto:hello@avatarsandco.com?subject=Work%20With%20Us&body=Hello%20Avatarsco%2C%0A%0AI%27m%20interested%20in%20working%20together.%20Here%27s%20some%20context%3A%0A%0AYour%20name%3A%20%0ABrand%20or%20project%20name%3A%20%0AWhat%20I%27m%20looking%20for%20(Brand%20partnerships%2C%20collab%20post%2C%20sponsored%20post%2C%20content%20series%2C%20etc.)%3A%20%0ATarget%20audience%20or%20community%3A%20%0AAesthetic%20reference%20(brand%2C%20creator%2C%20or%20campaign%20you%20admire)%3A%20%0ATimeline%3A%20%0AEstimated%20budget%3A%20%0A%0APhone%20number%3A%20%0APreferred%20mode%20for%20initial%20contact%20(email%2C%20phone%2C%20etc)%3A%20%0A%0AThank%20you%2C%0A%5BYour%20Name%5D" data-tip="Brand partnerships, collaborative posts, sponsored posts, advertising, and more.">Work With Us</a>
+        <a href="#" class="btn btn-primary mailto-btn" data-mailto="mailto:hello@avatarsandco.com?subject=Request%20a%20Digital%20Twin&body=Hello%20Avatarsco%2C%0A%0AI%27m%20interested%20in%20requesting%20a%20digital%20twin.%20Here%27s%20some%20context%3A%0A%0AYour%20name%3A%20%0ABrand%20or%20project%20name%3A%20%0AWhat%20will%20the%20digital%20twin%20be%20used%20for%20(e.g.%20marketing%2C%20content%2C%20virtual%20assistant%2C%20etc.)%3F%20%0ADo%20you%20have%20existing%20photos%20or%20video%20of%20the%20person%20to%20twin%3F%20%0AWill%20the%20twin%20need%20to%20speak%20or%20present%20or%20appear%20silently%3F%20%0AWhen%20do%20you%20need%20the%20digital%20twin%20ready%20by%3F%20%0AEstimated%20budget%3A%20%0A%0APhone%20number%3A%20%0APreferred%20mode%20for%20initial%20contact%20(email%2C%20phone%2C%20etc)%3A%20%0A%0AThank%20you%2C%0A%5BYour%20Name%5D" data-tip="Custom AI digital twin built from your likeness for content, marketing, or virtual presence.">Request a Digital Twin</a>
+      </div>
+      <p class="action-explainer entering" style="--order:2">Unsure about any of these? <a href="#faq">Click here to learn more</a></p>
+      <div class="hero-rule entering" style="--order:4">
+        <div class="hero-stats-col">
+          <h3 class="hero-stats-title">Stats at a Glance</h3>
+          <div class="hero-stats-row">
+            <div class="hero-stat">
+              <span class="stat-num" data-count="57.9" data-from="0" data-prefix="$" data-suffix="B" data-decimals="1" data-duration="1800">$57.9B</span>
+              <span class="stat-label">AI Avatar Market by 2031</span>
+            </div>
+            <div class="hero-stat">
+              <span class="stat-num" data-count="3" data-from="1" data-suffix="x" data-decimals="0" data-duration="2100">3x</span>
+              <span class="stat-label">Engagement vs. Human</span>
+            </div>
+            <div class="hero-stat">
+              <span class="stat-num">60%+</span>
+              <span class="stat-label">Brands Adopting AI Personas</span>
+            </div>
+          </div>
+          <h3 class="context-title">Fresh Creatives without the Creative Fatigue</h3>
+          <p class="hero-context">AI avatars are going mainstream across online marketing, social media,<br>gaming, and video production.</p>
+        </div>
+        <div class="hero-videos" oncontextmenu="return false">
+          <div class="hero-video">
+            <video src="assets/Video%20(for%20column)/AI-Avatar-Video.mp4" autoplay muted loop playsinline preload="metadata" disablepictureinpicture></video>
+            <span class="hero-video-badge"><span class="badge-txt">AI<br>Video</span></span>
+          </div>
+          <div class="hero-video">
+            <video src="assets/Video%20(for%20column)/AI-Avatar-Video-1.mov" autoplay muted loop playsinline preload="metadata" disablepictureinpicture></video>
+            <span class="hero-video-badge"><span class="badge-txt">AI<br>Video</span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Timeline: Full-width standalone -->
+    <section class="timeline-section">
+      <div class="timeline-section-inner">
+        <div class="timeline-section-header" data-reveal>
+          <p class="timeline-eyebrow">The origin</p>
+          <h2 class="timeline-title">The Evolution of AI Avatars at a Glance</h2>
+        </div>
+        <div class="timeline-controls-wrapper">
+          <div class="timeline-window" data-reveal>
+          <div class="timeline-track">
+            <div class="tl-row"><span class="tl-year">1950</span><span class="tl-milestone">The Turing Test Proposed</span><span class="tl-desc">Alan Turing proposes a test for machine intelligence, laying the philosophical groundwork for AI.</span></div>
+            <div class="tl-row"><span class="tl-year">1955</span><span class="tl-milestone">Term "AI" Coined</span><span class="tl-desc">John McCarthy coins "Artificial Intelligence" at the Dartmouth Workshop, formalizing the field.</span></div>
+            <div class="tl-row"><span class="tl-year">1966</span><span class="tl-milestone">ELIZA Chatbot Created</span><span class="tl-desc">MIT's ELIZA becomes the first chatbot, simulating conversation and demonstrating early NLP.</span></div>
+            <div class="tl-row"><span class="tl-year">1970</span><span class="tl-milestone">"Uncanny Valley" Hypothesized</span><span class="tl-desc">Masahiro Mori identifies the eerie discomfort triggered by near-human replicas.</span></div>
+            <div class="tl-row"><span class="tl-year">1984</span><span class="tl-milestone">Neuromancer Published</span><span class="tl-desc">William Gibson coins "cyberspace" and imagines digitally projected human identities.</span></div>
+            <div class="tl-row"><span class="tl-year">1992</span><span class="tl-milestone">Snow Crash Published</span><span class="tl-desc">Neal Stephenson's novel popularizes the Metaverse and avatar as a persistent digital self.</span></div>
+            <div class="tl-row"><span class="tl-year">2003</span><span class="tl-milestone">Second Life Launches</span><span class="tl-desc">Millions create and trade digital avatars, proving the commercial appetite for virtual personas.</span></div>
+            <div class="tl-row"><span class="tl-year">2012</span><span class="tl-milestone">Deep Learning Breakthrough</span><span class="tl-desc">AlexNet wins ImageNet by a wide margin, igniting the modern AI era and reshaping computer vision.</span></div>
+            <div class="tl-row"><span class="tl-year">2014</span><span class="tl-milestone">GANs Introduced</span><span class="tl-desc">Ian Goodfellow's Generative Adversarial Networks enable the creation of hyper-realistic synthetic images.</span></div>
+            <div class="tl-row"><span class="tl-year">2018</span><span class="tl-milestone">StyleGAN Released</span><span class="tl-desc">NVIDIA's StyleGAN generates photorealistic human faces from pure noise, none of them real.</span></div>
+            <div class="tl-row"><span class="tl-year">2020</span><span class="tl-milestone">GPT-3 Released</span><span class="tl-desc">OpenAI's language model produces human-quality text at scale, unlocking AI-powered persona voices.</span></div>
+            <div class="tl-row"><span class="tl-year">2022</span><span class="tl-milestone">ChatGPT Goes Mainstream</span><span class="tl-desc">100 million users in two months. The AI era shifts from research to real-world commercial adoption.</span></div>
+            <div class="tl-row"><span class="tl-year">2023</span><span class="tl-milestone">AI Avatar Platforms Emerge</span><span class="tl-desc">Dedicated tools for AI-generated avatars reach brands and creators. A new media category is born.</span></div>
+            <!-- Duplicate for seamless loop -->
+            <div class="tl-row"><span class="tl-year">1950</span><span class="tl-milestone">The Turing Test Proposed</span><span class="tl-desc">Alan Turing proposes a test for machine intelligence, laying the philosophical groundwork for AI.</span></div>
+            <div class="tl-row"><span class="tl-year">1955</span><span class="tl-milestone">Term "AI" Coined</span><span class="tl-desc">John McCarthy coins "Artificial Intelligence" at the Dartmouth Workshop, formalizing the field.</span></div>
+            <div class="tl-row"><span class="tl-year">1966</span><span class="tl-milestone">ELIZA Chatbot Created</span><span class="tl-desc">MIT's ELIZA becomes the first chatbot, simulating conversation and demonstrating early NLP.</span></div>
+            <div class="tl-row"><span class="tl-year">1970</span><span class="tl-milestone">"Uncanny Valley" Hypothesized</span><span class="tl-desc">Masahiro Mori identifies the eerie discomfort triggered by near-human replicas.</span></div>
+            <div class="tl-row"><span class="tl-year">1984</span><span class="tl-milestone">Neuromancer Published</span><span class="tl-desc">William Gibson coins "cyberspace" and imagines digitally projected human identities.</span></div>
+            <div class="tl-row"><span class="tl-year">1992</span><span class="tl-milestone">Snow Crash Published</span><span class="tl-desc">Neal Stephenson's novel popularizes the Metaverse and avatar as a persistent digital self.</span></div>
+            <div class="tl-row"><span class="tl-year">2003</span><span class="tl-milestone">Second Life Launches</span><span class="tl-desc">Millions create and trade digital avatars, proving the commercial appetite for virtual personas.</span></div>
+            <div class="tl-row"><span class="tl-year">2012</span><span class="tl-milestone">Deep Learning Breakthrough</span><span class="tl-desc">AlexNet wins ImageNet by a wide margin, igniting the modern AI era and reshaping computer vision.</span></div>
+            <div class="tl-row"><span class="tl-year">2014</span><span class="tl-milestone">GANs Introduced</span><span class="tl-desc">Ian Goodfellow's Generative Adversarial Networks enable the creation of hyper-realistic synthetic images.</span></div>
+            <div class="tl-row"><span class="tl-year">2018</span><span class="tl-milestone">StyleGAN Released</span><span class="tl-desc">NVIDIA's StyleGAN generates photorealistic human faces from pure noise, none of them real.</span></div>
+            <div class="tl-row"><span class="tl-year">2020</span><span class="tl-milestone">GPT-3 Released</span><span class="tl-desc">OpenAI's language model produces human-quality text at scale, unlocking AI-powered persona voices.</span></div>
+            <div class="tl-row"><span class="tl-year">2022</span><span class="tl-milestone">ChatGPT Goes Mainstream</span><span class="tl-desc">100 million users in two months. The AI era shifts from research to real-world commercial adoption.</span></div>
+            <div class="tl-row"><span class="tl-year">2023</span><span class="tl-milestone">AI Avatar Platforms Emerge</span><span class="tl-desc">Dedicated tools for AI-generated avatars reach brands and creators. A new media category is born.</span></div>
+          </div>
+          <div class="timeline-fade timeline-fade-top"></div>
+          <div class="timeline-fade timeline-fade-bottom"></div>
+        </div>
+          <div class="tl-arrows" aria-label="Timeline navigation">
+            <button class="tl-arrow tl-arrow-up" aria-label="Scroll timeline up">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,12 9,6 15,12"/></svg>
+            </button>
+            <button class="tl-arrow tl-arrow-down" aria-label="Scroll timeline down">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,6 9,12 15,6"/></svg>
+            </button>
+          </div>
+        </div><!-- /.timeline-controls-wrapper -->
+      </div>
+    </section>
+
+    <!-- Manifesto / About -->
+    <section class="manifesto" id="about">
+      <div class="manifesto-inner">
+        <div class="manifesto-content">
+          <img src="assets/about-heading.png" alt="About" class="manifesto-heading" data-reveal>
+          <p class="manifesto-text" data-reveal>
+            Avatarsco<sup class="tm">TM</sup> (formally Avatars and Co) is an AI-native media agency that sits at the intersection of storytelling, AI, and personification, expanding the practical use of AI avatars in brand development, creative marketing and digital asset design.
+          </p>
+          <p class="manifesto-text" data-reveal>
+            We enthusiastically believe in the assistive capacity of AI while valuing the people who bring ideas, direction, and meaning to the work.
+          </p>
+          <p class="manifesto-text" data-reveal>
+            Specialities: Short-form social-first content, UGC-style videos, product reviews, original character look and persona crafting, AI-twins, talking-head explainers, end-to-end avatar crafting, and more. Custom requests are always welcome and handled on a case-by-case basis.
+          </p>
+          <div class="pillars" data-reveal>
+            <div class="pillar">
+              <span class="pillar-num">01</span>
+              <span class="pillar-label">Personalization</span>
+            </div>
+            <div class="pillar">
+              <span class="pillar-num">02</span>
+              <span class="pillar-label">Storytelling</span>
+            </div>
+            <div class="pillar">
+              <span class="pillar-num">03</span>
+              <span class="pillar-label">Custom content on demand</span>
+            </div>
+          </div>
+        </div>
+        <div class="manifesto-logo-wrap" data-reveal>
+          <div class="manifesto-video-wrap">
+            <video
+              class="manifesto-video"
+              src="assets/avatarsco-demo-compilation.mp4"
+              autoplay loop muted playsinline
+              controlsList="nodownload"
+              oncontextmenu="return false"
+              disablePictureInPicture>
+            </video>
+            <span class="showcase-badge">AI Video</span>
+          </div>
+          <p class="video-disclaimer">All videos and images on this site are the exclusive property of Avatarsco and may not be reproduced or repurposed without prior written consent.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Timeline ticker -->
+    <!-- CTA Band -->
+    <section class="cta-band" data-reveal>
+      <div class="cta-inner">
+        <h2 class="cta-headline">Ready<br>to<br>create?</h2>
+        <p class="action-explainer">Unsure about any of these? <a href="#faq">Click here to learn more</a>.</p>
+        <div class="cta-actions">
+          <a href="#" class="btn btn-orange btn-lg mailto-btn" data-mailto="mailto:hello@avatarsandco.com?subject=Request%20a%20Video&body=Hello%20Avatarsco%2C%0A%0AI%27m%20interested%20in%20requesting%20a%20video.%20Here%27s%20some%20context%3A%0A%0AYour%20name%3A%20%0ABrand%20or%20project%20name%3A%20%0ANumber%20of%20videos%3A%20%0APurpose%20%2F%20Use%20(what%20is%20this%20video%20for%3F)%3A%20%0AUse%20on%20which%20platform(s)%3F%20(e.g.%20TikTok%2C%20Instagram%2C%20YouTube%2C%20Facebook%20Ads)%3A%20%0ARunning%20as%20a%20paid%20ad%3F%20(Yes%20%2F%20No%20%2F%20Unsure)%3A%20%0AVideo%20duration%20(e.g.%2015s%2C%2030s%2C%201%20min%20or%20more)%3A%20%0AEstimated%20budget%3A%20%0A%0APhone%20number%3A%20%0APreferred%20mode%20for%20initial%20contact%20(email%2C%20phone%2C%20etc)%3A%20%0A%0AThank%20you%2C%0A%5BYour%20Name%5D" data-tip="Custom AI video content for campaigns, organic posts, paid ads, and more.">Request a Video</a>
+          <a href="#" class="btn btn-primary btn-lg mailto-btn" data-mailto="mailto:hello@avatarsandco.com?subject=Request%20an%20Image&body=Hello%20Avatarsco%2C%0A%0AI%27m%20interested%20in%20requesting%20image.%20Here%27s%20some%20context%3A%0A%0AYour%20name%3A%20%0ABrand%20or%20project%20name%3A%20%0AIs%20this%20a%20product-based%20or%20person-based%20image%3F%20%0AHow%20many%20images%20do%20you%20need%3F%20%0AWhat%20will%20the%20images%20be%20used%20for%20(E-commerce%2C%20Website%2C%20Ads%2C%20Social%20Media%2C%20Print%2C%20etc.)%3F%20%0ADescribe%20the%20style%20of%20images%20that%20you%20want%20(you%20can%20include%20links%20or%20references)%3A%20%0AWill%20any%20images%20require%20text%3F%20%0AWhen%20do%20you%20need%20the%20images%3F%20%0AEstimated%20budget%3A%20%0A%0APhone%20number%3A%20%0APreferred%20mode%20for%20initial%20contact%20(email%2C%20phone%2C%20etc)%3A%20%0A%0AThank%20you%2C%0A%5BYour%20Name%5D" data-tip="Custom AI-generated imagery for your brand, product, or campaign.">Request an Image</a>
+          <a href="#" class="btn btn-ghost btn-lg mailto-btn" data-mailto="mailto:hello@avatarsandco.com?subject=Work%20With%20Us&body=Hello%20Avatarsco%2C%0A%0AI%27m%20interested%20in%20working%20together.%20Here%27s%20some%20context%3A%0A%0AYour%20name%3A%20%0ABrand%20or%20project%20name%3A%20%0AWhat%20I%27m%20looking%20for%20(Brand%20partnerships%2C%20collab%20post%2C%20sponsored%20post%2C%20content%20series%2C%20etc.)%3A%20%0ATarget%20audience%20or%20community%3A%20%0AAesthetic%20reference%20(brand%2C%20creator%2C%20or%20campaign%20you%20admire)%3A%20%0ATimeline%3A%20%0AEstimated%20budget%3A%20%0A%0APhone%20number%3A%20%0APreferred%20mode%20for%20initial%20contact%20(email%2C%20phone%2C%20etc)%3A%20%0A%0AThank%20you%2C%0A%5BYour%20Name%5D" data-tip="Brand partnerships, collaborative posts, sponsored posts, advertising, and more.">Work With Us</a>
+        </div>
+        <p class="cta-nudge">I'm not ready to request an image or video but I want to <a href="#recommend" class="cta-nudge-highlight">learn how to create AI images and videos</a>.<br>I also want to sign up to your email list so I <a href="#signup" class="cta-nudge-highlight">never miss an update</a>.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Custom Avatar Packaging -->
+  <section class="bespoke" id="work" data-reveal>
+    <div class="bespoke-inner">
+      <div class="bespoke-header">
+        <p class="bespoke-eyebrow">Premium Service</p>
+        <h2 class="bespoke-title">Custom Avatar<br>Package</h2>
+        <p class="bespoke-desc">A fully bespoke AI persona built from the ground up. Distinct voice, visual identity, audience strategy, and content direction all crafted around your brand.</p>
+      </div>
+      <!-- Formspree endpoint — submissions are emailed to hello@avatarsandco.com + kept in the Formspree dashboard. -->
+      <form class="bespoke-form" id="bespoke-form" action="https://formspree.io/f/xqerzqqq" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-input" name="name" placeholder="Your name" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Brand / Company</label>
+            <input type="text" class="form-input" name="brand" placeholder="Your brand or company" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">What are you looking to build?</label>
+          <textarea class="form-input form-textarea" name="description" placeholder="Describe your vision..."></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Budget Range</label>
+            <select class="form-input form-select" name="budget">
+              <option value="" disabled selected>Select a range</option>
+              <option>Under $5,000</option>
+              <option>$5,000 - $15,000</option>
+              <option>$15,000 - $30,000</option>
+              <option>$30,000+</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Timeline</label>
+            <select class="form-input form-select" name="timeline">
+              <option value="" disabled selected>Select a timeline</option>
+              <option>As soon as possible</option>
+              <option>Within 1 month</option>
+              <option>1 - 3 months</option>
+              <option>3+ months</option>
+              <option>Flexible</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Your Email</label>
+          <input type="email" class="form-input" name="email" placeholder="your@email.com" required />
+        </div>
+        <div class="form-footer">
+          <button type="submit" class="btn btn-orange bespoke-submit">Submit Inquiry</button>
+          <p class="form-note">A member of our team will follow up to schedule a consultation.</p>
+        </div>
+        <div class="form-success" id="bespoke-success">
+          <span class="form-success-title">Inquiry received.</span>
+          We'll be in touch shortly to schedule your consultation.
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Stay in the Loop -->
+  <section class="signup" id="signup" data-reveal>
+    <div class="signup-inner">
+      <p class="signup-label">Stay in the loop</p>
+      <p class="signup-sub">Not ready for a customized media asset? No problem. Sign up to join our ecosystem so you never miss an update.</p>
+      <div class="signup-form">
+        <input type="email" class="signup-input" id="signup-email" placeholder="your@email.com" />
+        <button class="btn btn-primary signup-btn" id="signup-submit">Notify Me</button>
+      </div>
+      <p class="signup-disclaimer">No spam. Unsubscribe anytime.</p>
+    </div>
+  </section>
+
+  <!-- Recommended (affiliate) -->
+  <section class="recommend" id="recommend" data-reveal>
+    <div class="recommend-inner">
+      <p class="recommend-prelude">If you want to learn it for yourself</p>
+      <h2 class="recommend-title">Trusted Communities and Resources</h2>
+      <p class="recommend-intro">If you are starting out or sharpening your skills in AI image and video, these are the resources we recommend. We only point you to resources that we highly recommend.</p>
+      <div class="recommend-grid">
+        <a class="recommend-card" href="https://www.skool.com/aivideobootcamp/about?ref=7fc5150a84e7459f9572df3772150df7" target="_blank" rel="noopener sponsored">
+          <div class="recommend-text">
+            <span class="recommend-tag">Community</span>
+            <span class="recommend-name">AI Video Boot Camp</span>
+            <span class="recommend-desc">The number one online community for AI image and video. Learn alongside thousands of creators, with real feedback and a room that keeps pace with the tools.</span>
+            <span class="recommend-cta">Explore the community &#8594;</span>
+          </div>
+          <div class="recommend-img">
+            <picture>
+              <source media="(max-width: 560px)" srcset="assets/Web%20Photo%20Gallery/AI-VB.jpg">
+              <img src="assets/Web%20Photo%20Gallery/AI-VB-Resized.png" alt="AI Video Boot Camp community" loading="lazy">
+            </picture>
+          </div>
+        </a>
+        <a class="recommend-card" href="https://mentation--avodigital.thrivecart.com/gen-ai-mastery-suite/" target="_blank" rel="noopener sponsored">
+          <div class="recommend-text">
+            <span class="recommend-tag">Self-paced course</span>
+            <span class="recommend-name">Master AI Creativity</span>
+            <span class="recommend-desc">A complete AI creative stack in one place: node-based workflows, images, video, influencers, digital twins, audio, and product shots. Built to take a beginner all the way.</span>
+            <span class="recommend-cta">See what's inside &#8594;</span>
+          </div>
+          <div class="recommend-img">
+            <picture>
+              <source media="(max-width: 560px)" srcset="assets/Web%20Photo%20Gallery/Master-Your-Creativity-Resized-4.3.png">
+              <img src="assets/Web%20Photo%20Gallery/Master-Your-Creativity-Resized.png" alt="Master AI Creativity course" loading="lazy">
+            </picture>
+          </div>
+        </a>
+      </div>
+      <p class="recommend-disclosure">These are affiliate recommendations. If you join through our links we may earn a commission at no extra cost to you.</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq" data-reveal>
+    <div class="faq-inner">
+      <h2 class="faq-title">FAQ<span class="faq-title-s">s</span></h2>
+      <div class="faq-list">
+        <details class="faq-item" data-reveal>
+          <summary class="faq-q"><span class="faq-num">01</span><span class="faq-q-text">What is an AI video?</span></summary>
+          <p class="faq-a">An AI video is content built around a fully AI-generated persona instead of a live actor. We build it to look and feel like real UGC, whether it's headed to organic posts, paid ads, or product pages.</p>
+        </details>
+        <details class="faq-item" data-reveal>
+          <summary class="faq-q"><span class="faq-num">02</span><span class="faq-q-text">What is the difference between a video request and an animation request?</span></summary>
+          <p class="faq-a">A video request includes full concept development: the idea, story, and direction for something like an ad, a content series, or a storyboard-driven piece. An animation request is execution only, bringing a concept you already have to life through animation or editing. Not sure which one fits? Describe your project in the brief and we'll scope it from there.</p>
+        </details>
+        <details class="faq-item" data-reveal>
+          <summary class="faq-q"><span class="faq-num">03</span><span class="faq-q-text">What is an AI image?</span></summary>
+          <p class="faq-a">An AI image is a photorealistic image built for your brand, product, or campaign, created without a physical photo shoot.</p>
+        </details>
+        <details class="faq-item" data-reveal>
+          <summary class="faq-q"><span class="faq-num">04</span><span class="faq-q-text">What is a digital twin?</span></summary>
+          <p class="faq-a">A digital twin is a custom AI version of you, or of your brand's talent, built from your likeness. It can show up in content and marketing, or act as an ongoing virtual presence for your brand.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <img src="assets/LOGO-asset_avatarsco-regular-1-transparent.png" alt="Avatarsco" class="footer-logo-img">
+      <span class="footer-copy">&copy; 2026 Avatarsco. All rights reserved.</span>
+      <span class="footer-copy" style="opacity:0.5; font-size:11px;">
+        <a href="terms.html" style="text-decoration:underline; text-underline-offset:3px; color:inherit;">Terms of Service</a>
+        &nbsp;&middot;&nbsp;
+        <a href="privacy.html" style="text-decoration:underline; text-underline-offset:3px; color:inherit;">Privacy Policy</a>
+      </span>
+      <a href="mailto:hello@avatarsandco.com" class="footer-email">hello@avatarsandco.com</a>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('nav-scrolled', window.scrollY > 56);
+    }, { passive: true });
+
+    // Entrance animations
+    document.querySelectorAll('.entering').forEach(el => {
+      const order = parseInt(el.style.getPropertyValue('--order') || '0');
+      el.style.animationDelay = (order * 130) + 'ms';
+    });
+
+    // Scroll reveal
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.13 });
+    document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
+
+    // Custom Avatar form
+    const bespokeForm = document.getElementById('bespoke-form');
+    const bespokeSuccess = document.getElementById('bespoke-success');
+    bespokeForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const action = bespokeForm.getAttribute('action');
+      if (!action || action === '#') {
+        bespokeForm.classList.add('form-submitted');
+        bespokeSuccess.classList.add('visible');
+        return;
+      }
+      const res = await fetch(action, {
+        method: 'POST',
+        body: new FormData(bespokeForm),
+        headers: { Accept: 'application/json' }
+      });
+      if (res.ok) {
+        bespokeForm.classList.add('form-submitted');
+        bespokeSuccess.classList.add('visible');
+      }
+    });
+
+    // Stay in the loop sign-up
+    document.getElementById('signup-submit').addEventListener('click', () => {
+      const email = document.getElementById('signup-email').value.trim();
+      if (!email) return;
+      window.location.href = 'mailto:hello@avatarsandco.com?subject=Stay%20in%20the%20Loop&body=Hi%20Avatarsco%20Team%2C%0A%0APlease%20add%20me%20to%20your%20list.%20My%20email%20is%3A%20' + encodeURIComponent(email);
+    });
+    document.getElementById('signup-email').addEventListener('keydown', e => {
+      if (e.key === 'Enter') document.getElementById('signup-submit').click();
+    });
+
+    // Email modal
+    const overlay = document.getElementById('modal-overlay');
+    const continueBtn = document.getElementById('modal-continue');
+
+    function openModal(mailto) {
+      continueBtn.href = mailto;
+      overlay.classList.add('modal-open');
+    }
+    function closeModal() {
+      overlay.classList.remove('modal-open');
+    }
+
+    document.querySelectorAll('.mailto-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        openModal(btn.dataset.mailto);
+      });
+    });
+
+    document.getElementById('modal-cancel').addEventListener('click', closeModal);
+    document.getElementById('modal-close').addEventListener('click', closeModal);
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeModal();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // MOBILE ONLY: move the manifesto video between sentence 1 and sentence 2.
+    // Restores its original column position on tablet/desktop. No duplicate video.
+    (function () {
+      const inner = document.querySelector('.manifesto-inner');
+      const content = document.querySelector('.manifesto-content');
+      const video = document.querySelector('.manifesto-logo-wrap');
+      if (!inner || !content || !video) return;
+      const target = content.querySelectorAll('.manifesto-text')[2]; // "Specialities" paragraph
+      if (!target) return;
+      const mq = window.matchMedia('(max-width: 768px)');
+      function apply() {
+        if (mq.matches) {
+          if (video.parentNode !== content || video.nextElementSibling !== target) {
+            content.insertBefore(video, target);
+          }
+        } else if (video.parentNode !== inner) {
+          inner.appendChild(video);
+        }
+      }
+      apply();
+      if (mq.addEventListener) mq.addEventListener('change', apply);
+      else mq.addListener(apply);
+    })();
+
+    // Nav blob menu — logo toggles an organic gooey blob of in-page jump links
+    (function () {
+      const toggle = document.getElementById('nav-logo-toggle');
+      const blob = document.getElementById('nav-blob-menu');
+      if (!toggle || !blob) return;
+      const wrap = toggle.closest('.nav-menu-wrap');
+      const nav = document.getElementById('nav');
+      const isOpen = () => blob.classList.contains('open');
+
+      // Particle constellation inside the blob — runs only while open
+      const canvas = blob.querySelector('.nav-blob-canvas');
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const W = 250, H = 210;
+      let ctx = null, raf = null, time = 0, dots = [];
+
+      function initDots() {
+        if (!canvas || ctx) return;
+        ctx = canvas.getContext('2d');
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = W * dpr;
+        canvas.height = H * dpr;
+        ctx.scale(dpr, dpr);
+        dots = [];
+        for (let i = 0; i < 78; i++) {
+          dots.push({
+            x: Math.random() * W,
+            y: Math.random() * H,
+            r: 0.4 + Math.random() * 0.9,
+            base: 0.12 + Math.random() * 0.22,
+            ph: Math.random() * 6.28,
+            sp: 0.4 + Math.random() * 0.9,
+            dx: (Math.random() - 0.5) * 0.14,
+            dy: (Math.random() - 0.5) * 0.14
+          });
+        }
+      }
+      function render() {
+        ctx.clearRect(0, 0, W, H);
+        for (let i = 0; i < dots.length; i++) {
+          const d = dots[i];
+          const a = d.base * (0.55 + 0.45 * Math.sin(time * d.sp + d.ph));
+          ctx.fillStyle = 'rgba(255,255,255,' + a.toFixed(3) + ')';
+          ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+      function loop() {
+        time += 0.02;
+        for (let i = 0; i < dots.length; i++) {
+          const d = dots[i];
+          d.x += d.dx; d.y += d.dy;
+          if (d.x < 0) d.x += W; else if (d.x > W) d.x -= W;
+          if (d.y < 0) d.y += H; else if (d.y > H) d.y -= H;
+        }
+        render();
+        raf = requestAnimationFrame(loop);
+      }
+      function startParticles() {
+        initDots();
+        if (!ctx) return;
+        if (reduce) { render(); return; }
+        if (!raf) loop();
+      }
+      function stopParticles() {
+        if (raf) { cancelAnimationFrame(raf); raf = null; }
+      }
+
+      function open() {
+        blob.classList.add('open');
+        toggle.setAttribute('aria-expanded', 'true');
+        toggle.setAttribute('aria-label', 'Close navigation menu');
+        blob.setAttribute('aria-hidden', 'false');
+        startParticles();
+      }
+      function close() {
+        blob.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Open navigation menu');
+        blob.setAttribute('aria-hidden', 'true');
+        stopParticles();
+      }
+
+      toggle.addEventListener('click', function (e) {
+        e.preventDefault();
+        isOpen() ? close() : open();
+      });
+
+      blob.querySelectorAll('.nav-blob-links a').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          const id = link.getAttribute('href');
+          if (!id || id.charAt(0) !== '#') return;
+          const target = document.querySelector(id);
+          close();
+          if (target) {
+            e.preventDefault();
+            const navH = nav ? nav.offsetHeight : 68;
+            const y = target.getBoundingClientRect().top + window.pageYOffset - navH - 12;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+          }
+        });
+      });
+
+      document.addEventListener('click', function (e) {
+        if (isOpen() && !wrap.contains(e.target)) close();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && isOpen()) close();
+      });
+    })();
+
+    // MOBILE ONLY: move just the stat NUMBERS above the showcase. The context line
+    // ("AI avatars are going mainstream...") stays in its column, above the videos.
+    // Restored to its original spot on larger screens.
+    (function () {
+      const hero = document.querySelector('.hero');
+      const statsRow = document.querySelector('.hero-stats-row');
+      const statsCol = document.querySelector('.hero-stats-col');
+      const showcase = document.querySelector('.hero-showcase');
+      if (!hero || !statsRow || !statsCol || !showcase) return;
+      const contextAnchor = statsCol.querySelector('.hero-context'); // row's original next sibling
+      const mql = window.matchMedia('(max-width: 768px)');
+      function place() {
+        if (mql.matches) {
+          if (!(statsRow.parentNode === hero && statsRow.nextElementSibling === showcase)) {
+            hero.insertBefore(statsRow, showcase);
+          }
+        } else if (statsRow.parentNode !== statsCol) {
+          statsCol.insertBefore(statsRow, contextAnchor);
+        }
+      }
+      place();
+      if (mql.addEventListener) mql.addEventListener('change', place);
+      else mql.addListener(place);
+    })();
+
+    // Count-up animation for hero stats (any .stat-num[data-count])
+    (function () {
+      const els = document.querySelectorAll('.stat-num[data-count]');
+      if (!els.length) return;
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const fmt = (el, val) =>
+        (el.getAttribute('data-prefix') || '') +
+        val.toFixed(parseInt(el.getAttribute('data-decimals') || '0', 10)) +
+        (el.getAttribute('data-suffix') || '');
+      const from = (el) => parseFloat(el.getAttribute('data-from') || '0');
+      // easeInOutQuad: starts slow (so the low numbers are visible), rapid through the
+      // middle, then settles at the end.
+      const ease = (p) => (p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2);
+      // Show the START figure right away so it never flashes the final number.
+      els.forEach((el) => { if (!reduce) el.textContent = fmt(el, from(el)); });
+      function run(el) {
+        const target = parseFloat(el.getAttribute('data-count'));
+        const a = from(el);
+        if (reduce) { el.textContent = fmt(el, target); return; }
+        const duration = parseInt(el.getAttribute('data-duration') || '1700', 10);
+        let start = null;
+        function frame(ts) {
+          if (start === null) start = ts;
+          const p = Math.min((ts - start) / duration, 1);
+          el.textContent = fmt(el, a + (target - a) * ease(p));
+          if (p < 1) requestAnimationFrame(frame);
+          else el.textContent = fmt(el, target);
+        }
+        // A short beat showing the start value, then count up.
+        setTimeout(() => requestAnimationFrame(frame), 400);
+      }
+      if (!('IntersectionObserver' in window)) { els.forEach(run); return; }
+      const obs = new IntersectionObserver((entries, o) => {
+        entries.forEach((e) => { if (e.isIntersecting) { run(e.target); o.unobserve(e.target); } });
+      }, { threshold: 0.4 });
+      els.forEach((el) => obs.observe(el));
+    })();
+
+    // Hero feature showcase — push-transition slideshow
+    (function () {
+      const feat = document.getElementById('hero-showcase-feat');
+      if (!feat) return;
+      const TOTAL = 8;
+      const INTERVAL = 5000;
+      const photos = Array.from(feat.querySelectorAll('.showcase-photo-item'));
+      const texts  = Array.from(feat.querySelectorAll('.showcase-text-item'));
+      const nums   = Array.from(document.getElementById('showcase-nums').querySelectorAll('.showcase-num'));
+      let current = 0;
+      let timer;
+
+      // Segment 4 (index 3) contains two photos that split its 5s window in half
+      const DUAL_INDEX = 3;
+      const dualImgs = photos[DUAL_INDEX] ? Array.from(photos[DUAL_INDEX].querySelectorAll('img')) : [];
+      let subTimer;
+      function showSub(i) {
+        dualImgs.forEach(function (im, k) { im.classList.toggle('sc-sub-active', k === i); });
+      }
+      function startDual() {
+        clearTimeout(subTimer);
+        showSub(0);
+        if (dualImgs.length > 1) {
+          subTimer = setTimeout(function () { showSub(1); }, INTERVAL / 2);
+        }
+      }
+      function stopDual() { clearTimeout(subTimer); }
+
+      function goTo(next) {
+        if (next === current) return;
+        const prev = current;
+        current = next;
+        if (prev === DUAL_INDEX) stopDual();
+        photos[prev].classList.add('sc-leaving');
+        texts[prev].classList.add('sc-leaving');
+        nums[prev].classList.remove('active');
+        photos[next].classList.add('active');
+        texts[next].classList.add('active');
+        nums[next].classList.add('active');
+        if (next === DUAL_INDEX) startDual();
+        setTimeout(function () {
+          photos[prev].classList.remove('active', 'sc-leaving');
+          texts[prev].classList.remove('active', 'sc-leaving');
+          if (prev === DUAL_INDEX) showSub(0);
+        }, 700);
+      }
+
+      timer = setInterval(function () { goTo((current + 1) % TOTAL); }, INTERVAL);
+
+      nums.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          clearInterval(timer);
+          goTo(parseInt(btn.dataset.idx));
+          timer = setInterval(function () { goTo((current + 1) % TOTAL); }, INTERVAL);
+        });
+      });
+    })();
+
+    // Timeline arrow manual scroll
+    (function () {
+      const track = document.querySelector('.timeline-track');
+      const upBtn = document.querySelector('.tl-arrow-up');
+      const downBtn = document.querySelector('.tl-arrow-down');
+      const ROW_H = 64;
+      const ITEM_COUNT = 13;
+      const MAX_Y = -(ITEM_COUNT * ROW_H);
+      let manualY = 0;
+      let isManual = false;
+      let resumeTimer = null;
+
+      function grabPosition() {
+        if (!isManual) {
+          const m = new DOMMatrix(window.getComputedStyle(track).transform);
+          manualY = Math.round(m.m42);
+          // Clamp into the first set (0 to MAX_Y)
+          manualY = ((manualY % (ITEM_COUNT * ROW_H)) - ITEM_COUNT * ROW_H) % (ITEM_COUNT * ROW_H);
+          if (manualY > 0) manualY -= ITEM_COUNT * ROW_H;
+          isManual = true;
+          track.style.animation = 'none';
+          track.style.transform = 'translateY(' + manualY + 'px)';
+        }
+      }
+
+      function nudge(dir) {
+        grabPosition();
+        manualY += dir * ROW_H;
+        // Wrap within the first set
+        if (manualY > 0) manualY = MAX_Y + ROW_H;
+        if (manualY < MAX_Y) manualY = 0;
+        track.style.transition = 'transform 0.28s cubic-bezier(0.4,0,0.2,1)';
+        track.style.transform = 'translateY(' + manualY + 'px)';
+        clearTimeout(resumeTimer);
+        resumeTimer = setTimeout(resume, 5000);
+      }
+
+      function resume() {
+        isManual = false;
+        track.style.transition = '';
+        track.style.transform = '';
+        track.style.animation = '';
+      }
+
+      upBtn.addEventListener('click', () => nudge(1));
+      downBtn.addEventListener('click', () => nudge(-1));
+    })();
+  </script>
+
+  <!-- Entry gate (first-visit interstitial + analytics) -->
+  <script src="entry-gate.js?v=6" defer></script>
+
+</body>
+</html>

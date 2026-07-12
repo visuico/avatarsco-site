@@ -1,0 +1,33 @@
+# ── Internal docs (keep private) ─────────────────────────
+CLAUDE.md
+DEPLOY.md
+LESSONS_LEARNED.md
+BLOG_AUTOMATION.md
+SOCIAL_LINKS.md
+
+# ── Dev scaffolding ──────────────────────────────────────
+prd.json
+progress.txt
+blog-keywords.json
+spec/
+
+# ── Old mockups (kept locally as reference, never published) ─
+index-dark-v1.html
+style-dark-v1.css
+_archive/
+
+# ── Blog (not launching yet) ─────────────────────────────
+blog/
+blog-astro/
+
+# ── Local git history backup (private, never publish) ────
+*.bundle
+
+# ── System / editor junk ─────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+node_modules/
+.env
+.env.*
