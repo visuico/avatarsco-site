@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Main-site sitemap. The blog has its own at /blog/sitemap-index.xml,
-     both are listed in robots.txt. -->
+<!-- Main-site sitemap. The blog will get its own at /blog/sitemap-index.xml once it launches. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://avatarsco.com/</loc>
+    <loc>https://avatarsandco.com/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+  <!-- Blog not launched yet — restore this block when it goes live:
   <url>
-    <loc>https://avatarsco.com/blog/</loc>
+    <loc>https://avatarsandco.com/blog/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  -->
   <url>
-    <loc>https://avatarsco.com/privacy.html</loc>
+    <loc>https://avatarsandco.com/privacy.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://avatarsco.com/terms.html</loc>
+    <loc>https://avatarsandco.com/terms.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
