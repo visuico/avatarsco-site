@@ -601,6 +601,27 @@ body::after {
   -webkit-user-select: none;
   -webkit-touch-callout: none;
 }
+/* Mobile-only brand stamp centered at the bottom of each hero video */
+.hero-video-stamp {
+  display: none;
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  font-family: var(--font-u);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+  pointer-events: none;
+  white-space: nowrap;
+}
+@media (max-width: 768px) {
+  .hero-video-stamp { display: block; }
+}
 .hero-video-badge {
   position: absolute;
   top: 10px;

@@ -52,10 +52,29 @@
     return out;
   }
 
+  // ── Self-exclusion: opt THIS device out of analytics entirely ───────────
+  // Visit  ?analytics=off  once on any device/browser to permanently exclude it
+  // (stored locally, survives future visits). Visit  ?analytics=on  to re-enable.
+  var OPTOUT_KEY = 'avatarsco_no_analytics';
+  function isOptedOut() {
+    try { return localStorage.getItem(OPTOUT_KEY) === '1'; } catch (e) { return false; }
+  }
+  (function handleOptOut() {
+    var a = getParams().analytics;
+    if (a === 'off') {
+      try { localStorage.setItem(OPTOUT_KEY, '1'); } catch (e) {}
+      try { alert('Analytics is now OFF on this device. Your visits will not be counted.'); } catch (e) {}
+    } else if (a === 'on') {
+      try { localStorage.removeItem(OPTOUT_KEY); } catch (e) {}
+      try { alert('Analytics is now ON on this device.'); } catch (e) {}
+    }
+  })();
+
   // ── PostHog loader (only runs if a key is set) ──────────────────────────
   var phInited = false;
   function initAnalytics() {
     if (phInited) return;
+    if (isOptedOut()) return;
     if (!ANALYTICS.enabled || !ANALYTICS.posthogKey) return;
     if (ANALYTICS.requireConsent && !consentAccepted()) return;
     // Official PostHog stub snippet — queues calls until the library loads.
