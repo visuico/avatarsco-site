@@ -1919,6 +1919,20 @@ body::after {
   height: 100%;
   object-fit: cover;
 }
+/* Banner variant: wide image spans the full card width and shows in full (no crop) */
+.recommend-card.recommend-card--banner {
+  grid-template-columns: 1fr;
+}
+.recommend-card--banner .recommend-img {
+  aspect-ratio: auto;
+}
+.recommend-card--banner .recommend-img img {
+  position: static;
+  width: 100%;
+  height: auto;
+  object-fit: fill;
+  display: block;
+}
 .recommend-disclosure {
   font-family: var(--font-u);
   font-size: 9px;
