@@ -17,7 +17,7 @@
   var ANALYTICS = {
     // Master switch. false = send nothing (events only log to the console) while you build.
     // Flip to true when you launch to start sending events to your PostHog dashboard.
-    enabled: false,
+    enabled: true,
     // Consent banner. false = no banner, analytics runs seamlessly (DNT is still honored).
     // Flip to true (~Aug 2026) to bring back the Accept/Decline consent banner and only fire
     // after the visitor accepts. (Also restore the consent wording in privacy.html 02/05.)
